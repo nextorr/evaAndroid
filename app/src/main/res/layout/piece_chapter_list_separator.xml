@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:background="#b6deff"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/capitulo"
+        android:id="@+id/textView"
+        android:layout_marginRight="5dp"
+        style="@style/eva.listSeparator" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-1"
+        android:id="@+id/textView_chapterSeparator_number"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        style="@style/eva.listSeparator"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Not set"
+        android:id="@+id/textView_chapterSeparator_text"
+        android:layout_marginLeft="5dp"
+        style="@style/eva.listSeparator"
+        android:layout_weight="0.9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_chapterSeparator_percent_complete"
+        android:layout_weight="0.1"
+        style="@style/eva.listSeparator" />
+</LinearLayout>

@@ -1,0 +1,30 @@
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+       >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar_questions" />
+
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:id="@+id/expandableListView_questions"
+            android:layout_gravity="top"
+            android:layout_weight="80" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            android:text="Puntaje: - "
+            android:id="@+id/textView_quizPoints"
+            android:layout_weight="20" />
+
+    </LinearLayout>
+
