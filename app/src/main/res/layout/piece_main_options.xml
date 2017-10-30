@@ -3,13 +3,27 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mis_cursos"
-        android:id="@+id/textView4"
-        android:singleLine="false"
-        style="@style/eva.homeTitle" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/eva_icon_mycourses" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mis_cursos"
+            android:id="@+id/textView4"
+            android:singleLine="false"
+            style="@style/eva.homeTitle"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -29,8 +43,7 @@
             android:layout_height="wrap_content"
             android:text="-"
             android:id="@+id/textView_certified_courses"
-            android:layout_marginRight="5dp"
-            style="@style/eva.homeText" />
+            style="@style/eva.homeTextNumber" />
 
         <TextView
             android:layout_width="0dp"
@@ -46,6 +59,6 @@
             android:layout_height="wrap_content"
             android:text="-"
             android:id="@+id/textView_pending_courses"
-            style="@style/eva.homeText" />
+            style="@style/eva.homeTextNumber" />
     </LinearLayout>
 </LinearLayout>

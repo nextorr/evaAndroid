@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.regional.autonoma.corporacion.eva.LoginActivity">
+    tools:mContext="com.regional.autonoma.corporacion.eva.LoginActivity"
+    android:background="@mipmap/eva_background_gray">
 
     <!-- Login progress -->
     <ProgressBar
@@ -19,16 +20,49 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/login_form"
+    <!--<ScrollView-->
+        <!--android:id="@+id/login_form"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+    <Button
+        android:id="@+id/google_sign_in_button"
+        style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/btn_google_light_normal_hdpi"
+        android:drawableLeft="@drawable/btn_google_light_normal_hdpi"
+        android:textStyle="bold"
+        android:text="@string/Google_log_in_TextBox"
+        android:background="@color/GoogleLogInButton"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/facebook_sign_in_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/fb_f_logo__white_100_margin"
+        android:drawableLeft="@drawable/fb_f_logo__white_100_margin"
+        android:textStyle="bold"
+        android:text="@string/Facebook_log_in_TextBox"
+        android:background="@color/GoogleLogInButton"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp" />
+
+    <View
+        android:layout_width="match_parent"
+        style="@style/eva.homeLineSeparator"
+        android:layout_marginTop="16dp" />
 
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -70,8 +104,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textStyle="bold"
-                android:text="@string/log_in_TextBox" />
+                android:text="@string/CAR_log_in_TextBox"
+                android:background="@color/evaColorAccent"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
 
         </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 </LinearLayout>

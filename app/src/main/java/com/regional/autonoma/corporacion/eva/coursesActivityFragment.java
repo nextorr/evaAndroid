@@ -195,7 +195,13 @@ public class coursesActivityFragment extends Fragment implements LoaderManager.L
                 // bad request errors are handled on the parser
                 ContentValues values = new ContentValues();
                 values.put(evaContract.courseEntry.COLUMN_COURSE_LIST, serviceJsonResponse);
-                getContext().getContentResolver().insert(evaContract.courseEntry.CONTENT_URI_JSON, values);
+                if(getContext()!= null){
+                    getContext().getContentResolver().insert(evaContract.courseEntry.CONTENT_URI_JSON, values);
+                }
+                else{
+                    Log.e("courses Activity", "null context");
+                }
+
             }
             Log.v("courseActivity", "the response is: " + serviceJsonResponse);
         }

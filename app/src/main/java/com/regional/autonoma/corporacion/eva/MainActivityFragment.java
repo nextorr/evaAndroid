@@ -185,22 +185,29 @@ public class MainActivityFragment extends Fragment {
                 final String requiredAvailable = scoreList.getString("totalRequiredCourses");
                 final String requiredCompleted = scoreList.getString("completedRequiredCourses");
 
-                mCoursesCertified.setText(coursesCertified);
-                mCoursesPending.setText(coursesPending);
-                mCatalogAvailable.setText(catalogAvailable);
-                mCatalogCompleted.setText(catalogCompleted);
-                mRequiredAvailable.setText(requiredAvailable);
-                mRequiredCompleted.setText(requiredCompleted);
+                if(getContext()!= null){
+                    mCoursesCertified.setText(coursesCertified);
+                    mCoursesPending.setText(coursesPending);
+                    mCatalogAvailable.setText(catalogAvailable);
+                    mCatalogCompleted.setText(catalogCompleted);
+                    mRequiredAvailable.setText(requiredAvailable);
+                    mRequiredCompleted.setText(requiredCompleted);
 
-                //save the state
-                SharedPreferences.Editor preferences = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-                preferences.putString(COURSES_CERTIFIED, coursesCertified);
-                preferences.putString(COURSES_PENDING, coursesPending);
-                preferences.putString(CATALOG_COMPLETED, catalogCompleted);
-                preferences.putString(CATALOG_AVAILABLE, catalogAvailable);
-                preferences.putString(REQUIRED_COMPLETED, requiredCompleted);
-                preferences.putString(REQUIRED_AVAILABLE, requiredAvailable);
-                preferences.commit();
+                    //save the state
+                    SharedPreferences.Editor preferences = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+                    preferences.putString(COURSES_CERTIFIED, coursesCertified);
+                    preferences.putString(COURSES_PENDING, coursesPending);
+                    preferences.putString(CATALOG_COMPLETED, catalogCompleted);
+                    preferences.putString(CATALOG_AVAILABLE, catalogAvailable);
+                    preferences.putString(REQUIRED_COMPLETED, requiredCompleted);
+                    preferences.putString(REQUIRED_AVAILABLE, requiredAvailable);
+                    preferences.commit();
+                }
+                else{
+                    Log.e("Main activity", "null context");
+                }
+
+
 
 
                 Log.v("mainActivity", "the response is: " + serviceJsonResponse);
@@ -226,7 +233,7 @@ public class MainActivityFragment extends Fragment {
 //                        Log.e("mainActivity", "communication error, invalid response received");
 //                    }
 //                }
-                Log.e("mainActivity", "error parsing the response");
+                Log.e("mainActivity", "error parsing the response: " + serviceJsonResponse);
             }
         }
 

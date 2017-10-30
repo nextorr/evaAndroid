@@ -6,69 +6,110 @@
 
 
     <style name="eva.homeTitle">
-        <item name="android:textSize">@dimen/abc_text_size_headline_material</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_headline_material</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
     <style name="eva.homeText">
-        <item name="android:textSize">@dimen/abc_text_size_medium_material</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_medium_material</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:background">@drawable/home_border</item>
+    </style>
+
+    <style name="eva.homeTextNumber">
+        <item name="android:textSize">@dimen/eva_abc_text_size_medium_material</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:background">@drawable/home_border_number</item>
     </style>
 
     <style name="eva.sectionTitle">
-        <item name="android:textSize">@dimen/abc_text_size_headline_material</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_headline_material</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:layout_marginLeft">4dp</item>
         <item name="android:layout_marginRight">4dp</item>
     </style>
 
     <style name="eva.sectionText">
-        <item name="android:textSize">@dimen/abc_text_size_medium_material</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_medium_material</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginRight">2dp</item>
     </style>
 
     <style name="eva.listItemTitle">
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:textSize">@dimen/abc_text_size_title_material</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_title_material</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
     <style name="eva.listItemDescription">
-        <item name="android:textSize">@dimen/abc_text_size_small_material</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_small_material</item>
         <item name="android:textColor">?android:attr/textColorTertiary</item>
     </style>
 
     <style name="eva.resourceListItem">
-        <item name="android:textSize">@dimen/abc_text_size_button_material</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_button_material</item>
         <item name="textAllCaps">true</item>
         <item name="android:textColor">?android:textColorPrimary</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:layout_marginLeft">4dp</item>
     </style>
 
     <style name="eva.listSeparator">
-        <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_subhead_material</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="eva.evaluationResult">
-        <item name="android:textSize">@dimen/abc_text_size_caption_material</item>
-        <item name="android:textColor">?android:textColorSecondary</item>
-    </style>
+
 
     <style name="eva.questionStatement">
-        <item name="android:textSize">@dimen/abc_text_size_title_material</item>
+        <item name="android:textSize">@dimen/eva_abc_text_size_title_material</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:paddingLeft">?android:attr/expandableListPreferredItemPaddingLeft</item>
     </style>
 
+    <style name="eva.quizCard">
+        <item name="android:textSize">@dimen/eva_abc_text_size_small_material</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:paddingLeft">@dimen/eva_quiz_card_padding_left</item>
+    </style>
+
+    <style name="eva.resultCard">
+        <item name="android:textSize">@dimen/eva_abc_text_size_small_material</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:paddingLeft">@dimen/eva_quiz_card_padding_left</item>
+    </style>
+
+    <style name="eva.evaluationResult">
+        <item name="android:textSize">@dimen/eva_abc_text_size_small_material</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:paddingLeft">@dimen/eva_quiz_card_padding_left</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="eva.evaluationResultTitle">
+        <item name="android:textSize">@dimen/eva_abc_text_size_headline_material</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:paddingLeft">@dimen/eva_quiz_card_padding_left</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="eva.evaluationResultDetails">
+        <item name="android:textSize">@dimen/eva_abc_text_size_small_material</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
 
     <style name="eva.homeLineSeparator">
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
         <item name="android:layout_height">2dp</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
@@ -79,6 +120,34 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">2dp</item>
         <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="eva.catalogInfoTitle">
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/colorBackground</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:background">@drawable/course_catalog_info</item>
+    </style>
+
+    <style name="eva.catalogInfoContent">
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="eva.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
     </style>
 
 </resources>

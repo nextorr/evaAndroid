@@ -19,12 +19,25 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="title not set"
-                android:id="@+id/textView_courseTitle"
-                style="@style/eva.listItemTitle" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView5"
+                    android:src="@drawable/eva_logo_shadow" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="title not set"
+                    android:id="@+id/textView_courseTitle"
+                    style="@style/eva.listItemTitle" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -50,62 +63,75 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3">
+                    android:layout_weight="30"
+                    android:background="@drawable/course_catalog_border">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/avance_curso"
-                        android:id="@+id/textView2" />
+                        android:id="@+id/textView2"
+                        style="@style/eva.catalogInfoTitle" />
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="80 %"
-                        android:id="@+id/textView_courseProgress" />
+                        android:id="@+id/textView_courseProgress"
+                        style="@style/eva.catalogInfoContent" />
                 </LinearLayout>
 
-                <View
-                    style="@style/eva.courseVerticalSeparator" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="5" />
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3">
+                    android:layout_weight="30"
+                    android:background="@drawable/course_catalog_border">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Calificación"
-                        android:id="@+id/textView6" />
+                        android:id="@+id/textView6"
+                        style="@style/eva.catalogInfoTitle" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="70 / 100"
-                        android:id="@+id/textView_coursePoints" />
+                        android:id="@+id/textView_coursePoints"
+                        style="@style/eva.catalogInfoContent" />
                 </LinearLayout>
 
-                <View
-                    style="@style/eva.courseVerticalSeparator" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="5" />
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3">
+                    android:layout_weight="30"
+                    android:background="@drawable/course_catalog_border">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Plazo"
-                        android:id="@+id/textView9" />
+                        android:id="@+id/textView9"
+                        style="@style/eva.catalogInfoTitle" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="20 Agosto 2016"
-                        android:id="@+id/textView_courseDueDate" />
+                        android:id="@+id/textView_courseDueDate"
+                        style="@style/eva.catalogInfoContent" />
                 </LinearLayout>
             </LinearLayout>
 

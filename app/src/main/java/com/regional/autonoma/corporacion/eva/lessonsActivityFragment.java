@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.regional.autonoma.corporacion.eva.Adapters.chapterAdapter;
 import com.regional.autonoma.corporacion.eva.Adapters.lessonAdapter;
 import com.regional.autonoma.corporacion.eva.Communication.EvaServices;
 import com.regional.autonoma.corporacion.eva.data.evaContract;
@@ -138,7 +139,7 @@ public class lessonsActivityFragment extends Fragment implements LoaderManager.L
                 // CursorAdapter returns a cursor at the correct position for getItem(), or null
                 // if it cannot seek to that position.
                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-                if(cursor != null){
+                if(cursor != null && cursor.getString(1).equals("lesson")){
                     String[] lessonData = {
                             //index for description
                             cursor.getString(6),
@@ -296,6 +297,9 @@ public class lessonsActivityFragment extends Fragment implements LoaderManager.L
                     getContext().getContentResolver().insert(evaContract.courseDetailEntry.CONTENT_URI_JSON,values);
                     //manually notify the change in data
                     getContext().getContentResolver().notifyChange(evaContract.courseDetailEntry.buildCourseDetailUri(Integer.parseInt(mCourseID)),null);
+                }
+                catch (NullPointerException e){
+                    Log.e("Lesson fragment", "null context");
                 }
 
             }

@@ -16,12 +16,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.regional.autonoma.corporacion.eva.Adapters.questionAdapter;
 import com.regional.autonoma.corporacion.eva.Communication.EvaServices;
+import com.regional.autonoma.corporacion.eva.Model.Answer;
+import com.regional.autonoma.corporacion.eva.Model.Question;
+import com.regional.autonoma.corporacion.eva.dialogs.EvaluationDialogFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +46,9 @@ public class questionsFragment extends Fragment {
     private ProgressBar mServiceQuestions;
     protected questionAdapter mQuestionAdapter;
     private String mlessonDetailID;
+    private Button mEvaluateButton;
+
+    EvaluationDialogFragment mScoreCardFragment = new EvaluationDialogFragment();
 
     public static questionsFragment newInstance(String lessonDetailID){
         questionsFragment fragment = new questionsFragment();
@@ -80,8 +88,22 @@ public class questionsFragment extends Fragment {
         ExpandableListView listView = (ExpandableListView) rootView.findViewById(
                 R.id.expandableListView_questions
         );
-        mQuestionAdapter.setPointsView((TextView) rootView.findViewById(R.id.textView_quizPoints));
+        //bind the UI result elements to the adapter so he can update its values.
+        mQuestionAdapter.setPointsView((TextView) rootView.findViewById(R.id.textView_quizPoints),
+                (TextView) rootView.findViewById(R.id.textView_quizPointsToPass),
+                (TextView) rootView.findViewById(R.id.textView_quizResult));
         listView.setAdapter(mQuestionAdapter);
+
+        //setting up the click event for the evaluate button
+        mEvaluateButton = (Button) rootView.findViewById(R.id.button_evaluate);
+        mEvaluateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEvaluateButton.setEnabled(false);
+                Toast.makeText(getActivity(), "Evaluando.. por favor espere", Toast.LENGTH_LONG).show();
+                callGraderService(getActivity(), mQuestionAdapter.evaluateAll());
+            }
+        });
 
         return rootView;
     }
@@ -106,6 +128,10 @@ public class questionsFragment extends Fragment {
         switch (id){
             case R.id.action_settings:
                 //TODO: remove this option from the definition
+                //do nothing
+                break;
+            case R.id.action_scoreCard:
+                mScoreCardFragment.show(getFragmentManager(), "dialog");
                 //do nothing
                 break;
             case R.id.action_evaluate:
@@ -166,6 +192,7 @@ public class questionsFragment extends Fragment {
             String tempStatement;
             String tempText;
             String tempEvaType;
+            int tempPoints;
             boolean tempIsCorrect;
             Question tempQuestion;
             Answer tempAnswer;
@@ -176,7 +203,8 @@ public class questionsFragment extends Fragment {
             //TODO: move the parsing to its own class so its easier to manage
             if (serviceJsonResponse != null){
                 try{
-                    JSONArray questionList = new JSONArray(serviceJsonResponse);
+                    JSONObject responseObject = new JSONObject(serviceJsonResponse);
+                    JSONArray questionList = responseObject.getJSONArray("quizDetail");
                     JSONArray answerList;
                     JSONObject answerDetail;
                     for (int i = 0; i< questionList.length();i++){
@@ -188,12 +216,16 @@ public class questionsFragment extends Fragment {
                         tempStatement = questionList.getJSONObject(i).getJSONObject("question").getString("statement");
                         tempID = questionList.getJSONObject(i).getJSONObject("question").getInt("QuestionID");
                         tempEvaType = questionList.getJSONObject(i).getJSONObject("question").getString("evaType");
+                        //IMPORTANT: initialize the question points assuming there is no detail
+                        tempPoints = questionList.getJSONObject(i).getJSONObject("question").getInt("points");
                         //now if the user has detail for this answer modify the object accordingly
-                        //optJSONObject gets tje objet or null, does not throw exception
+                        //optJSONObject gets the objet or null, does not throw exception
                         answerDetail = questionList.getJSONObject(i).optJSONObject("detail");
-                        tempQuestion = new Question(tempID, tempStatement, tempEvaType);
+                        tempQuestion = new Question(tempID, tempStatement, tempEvaType, tempPoints);
                         if(answerDetail != null){
-                            tempQuestion.setDetail(answerDetail.getBoolean("isCorrect"),
+                            //the first true indicates its a initialization parameter,
+                            //so the wrong answers are shown to the user as not answered
+                            tempQuestion.setDetail(true, answerDetail.getBoolean("isCorrect"),
                                     answerDetail.getInt("totalGrongAttempts"),
                                     answerDetail.getInt("finalScore"),
                                     answerDetail.getInt("currentMaxScore"));
@@ -206,7 +238,8 @@ public class questionsFragment extends Fragment {
                             tempIsCorrect = answerList.getJSONObject(j).getBoolean("isCorrect");
                             tempAnswerID = answerList.getJSONObject(j).getInt("AnswerID");
                             tempAnswer = new Answer(tempAnswerID, tempText, tempIsCorrect);
-                            if(tempAnswerID == lastAnswerID){
+                            if((answerDetail!= null) && (tempAnswerID == lastAnswerID) &&
+                                    answerDetail.getBoolean("isCorrect")){
                                tempAnswer.setIsChecked(true);
                             }
                             tempAnswerList.add(tempAnswer);
@@ -217,7 +250,17 @@ public class questionsFragment extends Fragment {
                     //once we have the question array fully formed, we set the adapter
                     mQuestionAdapter.addNewItems(tempQuestionList);
                     //set the Score card UI
-                    mQuestionAdapter.setPointsCard();
+                    //TODO: marked for deletion
+                    mQuestionAdapter.setPointsCard(responseObject.getBoolean("viewed"),
+                            responseObject.getBoolean("passed"),
+                            responseObject.getInt("totalObtainedPoints"));
+
+                    //set up the score card values
+                    mScoreCardFragment.setScoreCard(responseObject.getBoolean("viewed"),
+                            responseObject.getBoolean("passed"),
+                            responseObject.getInt("totalObtainedPoints"),
+                            mQuestionAdapter.getTotalPoints(), getContext().getResources());
+
                 }catch (JSONException e){
                     EvaServices.handleServiceErrors(getActivity(), serviceJsonResponse);
                     Log.e("courseActivity","error parsing the response");
@@ -288,17 +331,43 @@ public class questionsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String serviceJsonResponse){
+            //enable the button to prevent it from becoming irresponsive on errors
+            mEvaluateButton.setEnabled(true);
+
+            //parse the data and post it on the list adapter.
+            if(serviceJsonResponse == null){
+                Log.e("player activity", "null response from the service");
+                Toast.makeText(mContext, "Communication Error", Toast.LENGTH_LONG).show();
+                return;
+            }
             //log the response
             Log.v("courseActivity", "the response is: " + serviceJsonResponse);
-            //parse the data and post it on the list adapter.
             try{
                 JSONObject response = new JSONObject(serviceJsonResponse);
+                JSONArray graderDetail = response.getJSONArray("questionDetail");
+                for(int i = 0; i< graderDetail.length(); i++){
+                    mQuestionAdapter.setGraderFromService(graderDetail.getJSONObject(i).getInt("questionID"),
+                            graderDetail.getJSONObject(i).getInt("finalScore"),
+                            graderDetail.getJSONObject(i).getBoolean("isCorrect"),
+                            graderDetail.getJSONObject(i).getInt("totalGrongAttempts"),
+                            graderDetail.getJSONObject(i).getInt("currentMaxScore"));
+                }
+                //todo: find a better way to to this process
+
+                mQuestionAdapter.notifyDataSetChanged();
+
+                mScoreCardFragment.setScoreCard(response.getBoolean("passed"),
+                        response.getInt("currentTotalGrade"),
+                        getContext().getResources());
+                mScoreCardFragment.show(getFragmentManager(), "dialog");
+
+
                 if(response.getBoolean("passed")){
-                    Toast.makeText(mContext, "Quiz aprobado, felicitaciones", Toast.LENGTH_LONG).show();
-                    mQuestionAdapter.setPointsCard(response.getString("currentTotalGrade"));
+                    //Toast.makeText(mContext, "Quiz aprobado, felicitaciones", Toast.LENGTH_LONG).show();
+                    mQuestionAdapter.setPointsCard(response.getString("currentTotalGrade"), true);
                 }else{
-                    Toast.makeText(mContext, "Reprobado", Toast.LENGTH_LONG).show();
-                    mQuestionAdapter.setPointsCard(response.getString("currentTotalGrade"));
+                    //Toast.makeText(mContext, "Reprobado", Toast.LENGTH_LONG).show();
+                    mQuestionAdapter.setPointsCard(response.getString("currentTotalGrade"), false);
                 }
 
 
@@ -309,6 +378,8 @@ public class questionsFragment extends Fragment {
 
         }
     }
+
+
 
 
 }

@@ -24,7 +24,13 @@ import java.net.URL;
  * standard class to query the eva services
  */
 public class EvaServices {
-    private final String SERVICE_BASE_URL = "http://careva.azurewebsites.net/api/";
+    //use this address to communicate to the Azure infrastructure
+    //private final String SERVICE_BASE_URL = "http://careva.azurewebsites.net/api/";
+    private final String SERVICE_BASE_URL = "http://evacar.azurewebsites.net/api/";
+    //use this address to communicate to the localhost from the emulator
+    //private final String SERVICE_BASE_URL = "http://10.0.2.2:63052/api/";
+    //use this address to communicate to the local server from the local network on the device
+    //private final String SERVICE_BASE_URL = "http://192.168.0.5:63052/api/";
     private Uri.Builder mBuilder = Uri.parse(SERVICE_BASE_URL).buildUpon();
 
     public EvaServices servicePath(String path){

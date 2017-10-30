@@ -14,8 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -65,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupActionBar();
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -93,7 +93,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
 
-        mLoginFormView = findViewById(R.id.login_form);
+//        mLoginFormView = findViewById(R.id.login_form);
+        mLoginFormView = findViewById(R.id.email_login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 
@@ -106,39 +107,48 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
+        if (ContextCompat.checkSelfPermission(this,READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+           return true;
         }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
+        else
+        {
+//            use this and unncomment shouldShowRequestPermissionRationale
+//            and onRequestPermissionsResult if you want to grant granular permission
+//            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+//                //dont request contact data
+//                return false;
+//            }
+            //as of mar 2017 we are not using contacts, but we we leave the blueprint to use contacts if needed.
+            return false;
         }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
-        return false;
+//request for granular permission if the build version is greater than M
+//        if (ActivityCompat.shouldShowRequestPermissionRationale(this,READ_CONTACTS)) {
+//            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+//                    .setAction(android.R.string.ok, new View.OnClickListener() {
+//                        @Override
+//                        @TargetApi(Build.VERSION_CODES.M)
+//                        public void onClick(View v) {
+//                            ActivityCompat.requestPermissions(LoginActivity.this, new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+//                        }
+//                    });
+//        } else {
+//            ActivityCompat.requestPermissions(this,new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+//        }
+//        return false;
     }
 
     /**
      * Callback received when a permissions request has been completed.
      */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+//                                           @NonNull int[] grantResults) {
+//        if (requestCode == REQUEST_READ_CONTACTS) {
+//            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                populateAutoComplete();
+//            }
+//        }
+//    }
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
@@ -205,7 +215,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: at this point only CAR users are using the app, later we can verify company info here
-        return !email.contains("@");
+        //return !email.contains("@");
+        //2017 now the email address needs to be a valid email.
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isPasswordValid(String password) {
@@ -324,7 +336,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // the JSON request to send
             JSONObject evaAuth = new JSONObject();
             try{
-                evaAuth.put("user",mEmail);
+                String[] userNameParts = mEmail.split("@");
+                //the service definition expects user and domain individually
+                evaAuth.put("user",userNameParts[0]);
+                evaAuth.put("domain",userNameParts[1]);
                 evaAuth.put("passKey",mPassword);
             } catch (JSONException e){
                 Toast.makeText(getApplicationContext(), "error parsing the request", Toast.LENGTH_LONG).show();

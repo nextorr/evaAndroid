@@ -1,10 +1,9 @@
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-       >
+        android:orientation="vertical">
 
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
@@ -14,17 +13,65 @@
 
         <ExpandableListView
             android:layout_width="match_parent"
-            android:layout_height="0px"
+            android:layout_height="0dp"
             android:id="@+id/expandableListView_questions"
-            android:layout_gravity="top"
-            android:layout_weight="80" />
+            android:layout_weight="90" />
 
-        <TextView
+        <Button
             android:layout_width="fill_parent"
-            android:layout_height="0px"
-            android:text="Puntaje: - "
-            android:id="@+id/textView_quizPoints"
-            android:layout_weight="20" />
+            android:layout_height="wrap_content"
+            android:text="@string/evaluate_text"
+            android:id="@+id/button_evaluate"
+            android:layout_gravity="bottom"
+            android:background="@drawable/quiz_evaluate_button_color"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_quizResult"
+                android:text="@string/quizPending"
+                style="@style/eva.quizCard"
+                android:layout_weight="24" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="●"
+                android:id="@+id/textView3"
+                android:layout_weight="2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_quizPoints"
+                android:text="@string/quiz_evaluationPoints"
+                style="@style/eva.quizCard"
+                android:layout_weight="48" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="●"
+                android:id="@+id/textView8"
+                android:layout_weight="2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/quiz_pointsToPass"
+                android:id="@+id/textView_quizPointsToPass"
+                style="@style/eva.quizCard"
+                android:layout_weight="24" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

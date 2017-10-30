@@ -44,12 +44,14 @@
         completions."
     </string>
     <string name="user_hint">Usuario CAR</string>
-    <string name="user_password">Contraseña</string>
-    <string name="log_in_TextBox">Ingresar</string>
+    <string name="user_password">Contraseña sistema SIDCAR</string>
+    <string name="CAR_log_in_TextBox">Ingreso EVA</string>
+    <string name="Google_log_in_TextBox">Inicia sesion con GOOGLE</string>
+    <string name="Facebook_log_in_TextBox">Inicia sesion con FACEBOOK</string>
     <string name="error_invalid_password_es">la contraseña es muy corta</string>
     <string name="error_communication">Error en el servicio, intente nuevamente</string>
     <string name="error_field_required_es">Ingrese su usuario de SIDCAR</string>
-    <string name="error_invalid_email_es">Ingrese el usuario sin simbolos</string>
+    <string name="error_invalid_email_es">Ingrese el usuario completo, con simbolo de @ y el dominio</string>
     <string name="title_activity_catalog">catalogActivity</string>
     <string name="button_enroll_text">Inscribir</string>
     <string name="enrolled_button_enabled">Inscrito</string>
@@ -144,4 +146,16 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="quiz_evaluationPoints">Puntos Obtenidos:\u0020</string>
+    <string name="quiz_pointsToPass">Minimo:\u0020</string>
+    <string name="quizPending">¡ Pendiente !</string>
+    <string name="quizAproved">¡ Aprobado !</string>
+    <string name="quizFailed">¡ Perdido !</string>
+    <string name="questionsPoints">\u0020 Pts</string>
+    <string name="evaluate_text">Evaluar !</string>
+    <string name="evaluationDate">Evaluacion realizada en:</string>
+    <string name="evaluationMinText">Minimo</string>
+    <string name="EvaluationMaxText">Maximo</string>
+    <string name="EvaDesc">Escuela Virtual Ambiental</string>
 </resources>
+

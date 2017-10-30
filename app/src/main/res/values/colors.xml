@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="colorBackground">#fafafa</color>
+    <color name="evaColorPrimary">#f44336</color>
+    <color name="evaColorAccent">#00c853</color>
+    <color name="GoogleLogInButton">#4285F4</color>
+    <color name="evaColorPrimaryDark">#b71c1c</color>
+    <color name="evaColorGray">#9D9FA2</color>
 </resources>

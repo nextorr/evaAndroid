@@ -12,19 +12,40 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         card_view:cardCornerRadius="2dp"
-        card_view:contentPadding="10dp">
+        android:layout_margin="5dp"
+        card_view:contentPaddingTop="5dp"
+        card_view:contentPaddingBottom="0dp"
+        card_view:contentPaddingLeft="5dp"
+        card_view:contentPaddingRight="5dp">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="title not set"
-                android:id="@+id/textView_catalog_title"
-                style="@style/eva.listItemTitle" />
+                android:orientation="horizontal"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView4"
+                    android:src="@drawable/eva_logo_shadow"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="title not set"
+                    android:id="@+id/textView_catalog_title"
+                    style="@style/eva.listItemTitle"
+
+                     />
+
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -43,65 +64,67 @@
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3">
+                    android:layout_weight="40"
+                    android:background="@drawable/course_catalog_border">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="tiempo requerido horas / dias"
-                        android:id="@+id/textView2" />
+                        android:text="Dedicación"
+                        android:id="@+id/textView2"
+                        android:autoText="false"
+                        style="@style/eva.catalogInfoTitle" />
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="80 %"
-                        android:id="@+id/textView_catalog_commitment_time" />
+                        android:id="@+id/textView_catalog_commitment_time"
+                        style="@style/eva.catalogInfoContent" />
+
                 </LinearLayout>
 
-                <View
-                    style="@style/eva.courseVerticalSeparator" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="3" />
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3">
+                    android:layout_weight="40"
+                    android:background="@drawable/course_catalog_border">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="numero de videos"
-                        android:id="@+id/textView_total_videos_title" />
+                        android:id="@+id/textView_total_videos_title"
+                        android:layout_gravity="center_horizontal"
+                        style="@style/eva.catalogInfoTitle" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="70 / 100"
-                        android:id="@+id/textView_total_videos" />
+                        android:id="@+id/textView_total_videos"
+                        style="@style/eva.catalogInfoContent" />
                 </LinearLayout>
 
-                <View
-                    style="@style/eva.courseVerticalSeparator" />
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3">
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/button_enroll"
-                        android:text="@string/button_enroll_text" />
-                </LinearLayout>
             </LinearLayout>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_enroll"
+                android:text="@string/button_enroll_text" />
 
         </LinearLayout>
 

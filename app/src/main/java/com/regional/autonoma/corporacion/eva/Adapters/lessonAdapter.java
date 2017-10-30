@@ -92,13 +92,13 @@ public class lessonAdapter extends CursorAdapter {
                 String passed = cursor.getString(10);
 
                 if(viewed == "false")
-                    viewHolder.lessonStatusView.setImageResource(android.R.drawable.presence_invisible);
+                    viewHolder.lessonStatusView.setImageResource(R.drawable.eva_icon_pending);
 
                 if(viewed == "true" && passed == "false")
-                    viewHolder.lessonStatusView.setImageResource(android.R.drawable.presence_offline);
+                    viewHolder.lessonStatusView.setImageResource(R.drawable.eva_icon_incorrect);
 
                 if(viewed == "true" && passed == "true")
-                    viewHolder.lessonStatusView.setImageResource(android.R.drawable.presence_online);
+                    viewHolder.lessonStatusView.setImageResource(R.drawable.eva_icon_correct);
 
 
                 break;

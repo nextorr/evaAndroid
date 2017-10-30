@@ -12,6 +12,7 @@ import com.regional.autonoma.corporacion.eva.R;
 
 /**
  * Created by nestor on 6/30/2016.
+ * this draws the image banner on the main page of the app
  */
 public class homePageAdapter extends PagerAdapter {
 
@@ -19,8 +20,8 @@ public class homePageAdapter extends PagerAdapter {
     LayoutInflater mLayoutInflater;
 
     private final int[] mResources = {
-            R.mipmap.logo_car,
-            R.mipmap.mensaje_car
+            R.drawable.eva_banner_1,
+            R.drawable.eva_banner_2,
     };
 
     public homePageAdapter(Context context) {

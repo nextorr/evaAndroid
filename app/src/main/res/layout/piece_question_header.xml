@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
 
     <TextView
@@ -11,20 +13,38 @@
 
         android:text="not set"
         android:id="@+id/textView_questionText"
-        android:layout_weight="80"
-        style="@style/eva.questionStatement" />
+        android:layout_weight="1"
+        style="@style/eva.questionStatement"
+        android:paddingTop="2dip"
+        android:paddingBottom="2dip" />
 
     <Space
-        android:layout_width="20px"
+        android:layout_width="2dp"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="not set"
-        android:id="@+id/textView_questionEvaluationResult"
-        android:layout_weight="20"
-        style="@style/eva.evaluationResult"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView_evaluationResult"
+            android:src="@drawable/eva_icon_not_answered"
+            android:layout_gravity="right"
+            android:layout_marginRight="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 Pts"
+            android:id="@+id/textView_questionPoints"
+            style="@style/eva.evaluationResult"
+            android:layout_gravity="right"
+            android:visibility="visible"
+            android:layout_marginRight="4dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

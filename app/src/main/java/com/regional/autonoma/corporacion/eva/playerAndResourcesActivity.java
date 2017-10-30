@@ -1,6 +1,7 @@
 package com.regional.autonoma.corporacion.eva;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,9 +11,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.regional.autonoma.corporacion.eva.Model.Lesson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +87,10 @@ public class playerAndResourcesActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //TODO: here we are intentionally disabling the FAB, but we need the code to
+        //communicate witht he professor. modify the functionality to be initiated on the menu option.
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = null;
         if(fab!= null){
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,13 +155,29 @@ public class playerAndResourcesActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+            Drawable icon;
+            SpannableString sb;
+            ImageSpan imageSpan;
             switch (position) {
                 case 0:
-                    return "RECURSOS";
+                    icon = getBaseContext().getResources().getDrawable(R.drawable.eva_video);
+                    icon.setBounds(0,0,icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+                    sb = new SpannableString("    " + "RECURSOS");
+                    imageSpan = new ImageSpan(icon, ImageSpan.ALIGN_BOTTOM);
+                    sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    return sb;
+                    //return "RECURSOS";
                 case 1:
-                    return "PREGUNTAS";
+                    icon = getBaseContext().getResources().getDrawable(R.drawable.eva_quiz);
+                    icon.setBounds(0,0,icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+                    sb = new SpannableString("    " + "PREGUNTAS");
+                    imageSpan = new ImageSpan(icon, ImageSpan.ALIGN_BOTTOM);
+                    sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    return sb;
+                    //return "PREGUNTAS";
             }
             return null;
         }
+
     }
 }

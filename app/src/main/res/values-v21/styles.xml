@@ -7,4 +7,11 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>
+
+    <style name="EvaTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/evaColorPrimary</item>
+        <item name="colorAccent">@color/evaColorAccent</item>
+        <item name="colorPrimaryDark">@color/evaColorPrimaryDark</item>
+        <item name="android:statusBarColor">@color/evaColorPrimaryDark</item>
+    </style>
 </resources>

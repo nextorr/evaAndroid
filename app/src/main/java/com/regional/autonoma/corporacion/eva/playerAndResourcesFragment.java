@@ -1,6 +1,5 @@
 package com.regional.autonoma.corporacion.eva;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -8,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,13 +25,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.regional.autonoma.corporacion.eva.Adapters.resourceAdapter;
 import com.regional.autonoma.corporacion.eva.Communication.EvaServices;
+import com.regional.autonoma.corporacion.eva.Model.Lesson;
+import com.regional.autonoma.corporacion.eva.Utils.FileOpen;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by nestor on 13-Sep-16.
@@ -48,6 +57,18 @@ public class playerAndResourcesFragment extends Fragment {
     private ProgressBar mServiceFiles;
     private resourceAdapter mResourceAdapter;
     private Lesson mLessonInfo;
+    private MediaController mVideoController;
+    private ListView mFileListView; //use this to show download progress
+
+    //helper class to send current file location to the asynctask
+    public class stringInt {
+        public String text;
+        public int number;
+    }
+    public class DoubleInt {
+        public int first;
+        public int second;
+    }
 
     public static playerAndResourcesFragment newInstance(String lessonID, String description, String videoURL){
         playerAndResourcesFragment fragment = new playerAndResourcesFragment();
@@ -91,9 +112,10 @@ public class playerAndResourcesFragment extends Fragment {
                 mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
                     @Override
                     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                        MediaController videoController = new MediaController((getActivity()), false);
-                        video.setMediaController(videoController);
-                        videoController.setAnchorView(video);
+                        mVideoController = new MediaController((getActivity()), false);
+                        video.setMediaController(mVideoController);
+                        mVideoController.setAnchorView(video);
+                        mVideoController.show(1000);
                     }
                 });
             }
@@ -109,15 +131,16 @@ public class playerAndResourcesFragment extends Fragment {
                 mLessonInfo.fileURLList
         );
 
-        ListView listView = (ListView) rootView.findViewById(R.id.listView_file_list);
+        //ListView listView = (ListView) rootView.findViewById(R.id.listView_file_list);
+        mFileListView = (ListView) rootView.findViewById(R.id.listView_file_list);
         //ViewCompat.setNestedScrollingEnabled(listView, true);
-        listView.setAdapter(mResourceAdapter);
+        mFileListView.setAdapter(mResourceAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mFileListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                new DownloadFile(getActivity()).execute(mLessonInfo.getFileURL(position), mLessonInfo.getFileDisplayName(position));
+                new DownloadFile(getActivity()).execute(mLessonInfo.getFileURL(position), mLessonInfo.getFileDisplayName(position), String.valueOf(position));
             }
         });
         return rootView;
@@ -132,6 +155,14 @@ public class playerAndResourcesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_player_and_resources, menu);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(mVideoController!= null && !isVisibleToUser){
+            mVideoController.hide();
+        }
     }
 
     @Override
@@ -160,7 +191,7 @@ public class playerAndResourcesFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public class DownloadFile extends AsyncTask<String, Void, File> {
+    public class DownloadFile extends AsyncTask<String, Integer, File> {
         private Context mContext;
         public DownloadFile (Context context){
             mContext = context;
@@ -170,26 +201,89 @@ public class playerAndResourcesFragment extends Fragment {
         protected File doInBackground(String... strings) {
             String fileUrl = strings[0];   // -> http://maven.apache.org/maven-1.x/maven.pdf
             String fileName = strings[1];  // -> maven.pdf
-            String extStorageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
-            File folder = new File(extStorageDirectory, "eva");
-            boolean success = true;
-            if(!folder.exists()){
-                success = folder.mkdirs();
-            }
-            if(!success){
-                return  null;
+            int itemArrayPosition = Integer.parseInt(strings[2]); //position of the clicked item
+
+            //check if externar storage is present
+            String storageDirectory;
+            String state = Environment.getExternalStorageState();
+
+            File pdfFile;
+
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+                // We can read and write the media
+                storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+                File folder = new File(storageDirectory, "eva");
+                boolean success = true;
+                if(!folder.exists()){
+                    success = folder.mkdirs();
+                }
+                if(!success){
+                    return  null;
+                }
+
+
+                pdfFile = new File(folder, fileName);
+            } else {
+                // cant write to external storage
+                //so save the file to the internal system cache.
+                pdfFile = new File(mContext.getCacheDir(), fileName);
             }
 
 
-            File pdfFile = new File(folder, fileName);
+
             //TODO: marked to delete
 //            try{
 //                pdfFile.createNewFile();
 //            }catch (IOException e){
 //                e.printStackTrace();
 //            }
-            FileDownloader.downloadFile(fileUrl, pdfFile);
+            //TODO:remove the function
+            //FileDownloader.downloadFile(fileUrl, pdfFile);
+            //to get download progrees we need the actual cicle here, so we can publish the info to the UI
+            final int  MEGABYTE = 1024 * 1024;
+            try {
+                URL url = new URL(fileUrl);
+                HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+                //urlConnection.setRequestMethod("GET");
+                //urlConnection.setDoOutput(true);
+                urlConnection.connect();
+
+                InputStream inputStream = urlConnection.getInputStream();
+                FileOutputStream fileOutputStream = new FileOutputStream(pdfFile);
+                float totalSize = urlConnection.getContentLength();
+
+                byte[] buffer = new byte[MEGABYTE];
+                int bufferLength = 0;
+                float bitesDownloaded = 0;
+                while((bufferLength = inputStream.read(buffer))>0 ){
+                    fileOutputStream.write(buffer, 0, bufferLength);
+                    bitesDownloaded += bufferLength;
+                    publishProgress((int)((bitesDownloaded/totalSize)*100), itemArrayPosition);
+                }
+                fileOutputStream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return pdfFile;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            //[0] -> progress;  [1]itemPosition
+            //directly modify the list view
+            //TODO: a reclicler view can be a better approach.
+            View element = mFileListView.getChildAt(values[1] - mFileListView.getFirstVisiblePosition());
+
+            if (element == null)
+                return;
+
+            TextView fileDisplayName = (TextView) element.findViewById(R.id.textView_file_item_downloadProgress);
+            fileDisplayName.setText("   " + String.valueOf(values[0]) + " %");
         }
 
         @Override
@@ -199,7 +293,7 @@ public class playerAndResourcesFragment extends Fragment {
                 return;
             }
             try {
-                FileOpen.openFile(mContext,pdfFile);
+                FileOpen.openFile(mContext, pdfFile);
             } catch (IOException e) {
                 Toast.makeText(mContext, "cannot open the file", Toast.LENGTH_LONG).show();
                 Log.v("FILE", "error opening the file");

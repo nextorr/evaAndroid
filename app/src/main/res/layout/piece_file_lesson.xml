@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingLeft="4dp">
 
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView7"
+        android:src="@drawable/ic_insert_drive_file"
+        android:layout_marginRight="5dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Not Set"
         android:id="@+id/textView_file_item"
-        style="@style/eva.resourceListItem" />
+        style="@style/eva.resourceListItem"
+        android:layout_weight="95" />
+
+    <TextView
+        android:id="@+id/textView_file_item_downloadProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:layout_weight="5"
+        style="@style/eva.resourceListItem"
+        android:layout_gravity="right" />
 
 
 </LinearLayout>

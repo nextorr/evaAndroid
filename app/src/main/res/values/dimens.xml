@@ -6,4 +6,16 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!--text size definitions-->
+    <dimen name="eva_abc_text_size_title_material">15sp</dimen>
+    <dimen name="eva_abc_text_size_small_material">14sp</dimen>
+    <dimen name="eva_abc_text_size_caption_material">12sp</dimen>
+    <dimen name="eva_abc_text_size_subhead_material">16sp</dimen>
+    <dimen name="eva_abc_text_size_button_material">14sp</dimen>
+    <dimen name="eva_abc_text_size_medium_material">18sp</dimen>
+    <dimen name="eva_abc_text_size_headline_material">24sp</dimen>
+
+    <dimen name="eva_quiz_card_padding_left">5dp</dimen>
+
 </resources>
