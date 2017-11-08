@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
             preferenceEditor.apply();
 
             //go to the log in page
-            Intent logIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(logIntent);
+            Intent signInIntent = new Intent(MainActivity.this, multipleLoginActivity.class);
+            startActivity(signInIntent);
 
             return true;
         }

@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.regional.autonoma.corporacion.eva.LoginActivity;
+import com.regional.autonoma.corporacion.eva.multipleLoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -256,8 +256,8 @@ public class EvaServices {
                 Toast.makeText(context, outMsg, Toast.LENGTH_LONG).show();
                 //send the user to the login page if the error is invalid public key
                 if(outMsg.startsWith("ERROR : 100")){
-                    Intent logIntent = new Intent(context, LoginActivity.class);
-                    context.startActivity(logIntent);
+                    Intent signInIntent = new Intent(context, multipleLoginActivity.class);
+                    context.startActivity(signInIntent);
                 }
             } catch (JSONException ex) {
                 if(JsonString.startsWith("ERROR")){

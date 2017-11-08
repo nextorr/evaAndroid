@@ -142,8 +142,8 @@ public class MainActivityFragment extends Fragment {
         if(userKey.equals("empty")){
             Toast.makeText(this.getActivity(), "no public key stored fragment", Toast.LENGTH_LONG).show();
             //send the user to the login activity
-            Intent logIntent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(logIntent);
+            Intent signInIntent = new Intent(getActivity(), multipleLoginActivity.class);
+            startActivity(signInIntent);
         }else{
             new QueryEvaServices().execute("score", userKey);
         }

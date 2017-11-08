@@ -62,14 +62,14 @@ public class playerAndResourcesActivity extends AppCompatActivity {
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsPagerAdapter.addFragment(playerAndResourcesFragment.newInstance(mLessonID, mLessonInfo.description, mLessonInfo.videoURL));
-        mSectionsPagerAdapter.addFragment(questionsFragment.newInstance(mLessonDetailID));
+        playerSectionsPagerAdapter mPlayerSectionsPagerAdapter = new playerSectionsPagerAdapter(getSupportFragmentManager());
+        mPlayerSectionsPagerAdapter.addFragment(playerAndResourcesFragment.newInstance(mLessonID, mLessonInfo.description, mLessonInfo.videoURL));
+        mPlayerSectionsPagerAdapter.addFragment(questionsFragment.newInstance(mLessonDetailID));
 
         // Set up the ViewPager with the sections adapter.
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         if(mViewPager != null){
-            mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setAdapter(mPlayerSectionsPagerAdapter);
         }
         else{
             Toast.makeText(this,"viewpager adapter error", Toast.LENGTH_LONG).show();
@@ -131,10 +131,10 @@ public class playerAndResourcesActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class playerSectionsPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> fragmentList = new ArrayList<>();
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public playerSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -142,7 +142,7 @@ public class playerAndResourcesActivity extends AppCompatActivity {
             fragmentList.add(fragment);
         }
 
-            @Override
+        @Override
         public Fragment getItem(int position) {
             return fragmentList.get(position);
         }

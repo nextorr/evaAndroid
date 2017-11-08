@@ -30,16 +30,20 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="EvaTheme" parent="AppTheme" >
+    <style name="EvaTheme" parent="AppTheme">
         <item name="colorPrimary">@color/evaColorPrimary</item>
         <item name="colorAccent">@color/evaColorAccent</item>
         <item name="colorPrimaryDark">@color/evaColorPrimaryDark</item>
     </style>
 
-    <style name="EvaTheme.NoActionBar" parent="AppTheme.NoActionBar" >
+    <style name="EvaTheme.NoActionBar" parent="AppTheme.NoActionBar">
         <item name="colorPrimary">@color/evaColorPrimary</item>
         <item name="colorAccent">@color/evaColorAccent</item>
         <item name="colorPrimaryDark">@color/evaColorPrimaryDark</item>
     </style>
+
+    <style name="EvaTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="EvaTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

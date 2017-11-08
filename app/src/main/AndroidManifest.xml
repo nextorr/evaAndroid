@@ -5,12 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <!--<uses-permission android:name="android.permission.READ_CONTACTS" />-->
-    <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />-->
-    <!--<uses-permission android:name="android.permission.READ_PROFILE" />-->
-
+    <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
+    <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_PROFILE" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/eva_logo_launcher"
@@ -81,6 +79,22 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.regional.autonoma.corporacion.eva.MainActivity" />
+        </activity>
+        <activity
+            android:name=".multipleLoginActivity"
+            android:label="@string/title_activity_multiple_login"
+            android:theme="@style/EvaTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.regional.autonoma.corporacion.eva.MainActivity" />
+        </activity>
+        <activity
+            android:name=".registerActivity"
+            android:label="@string/register_activity_label"
+            android:theme="@style/EvaTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.regional.autonoma.corporacion.eva.multipleLoginActivity" />
         </activity>
     </application>
 
